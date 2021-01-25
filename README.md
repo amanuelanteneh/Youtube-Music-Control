@@ -1,4 +1,4 @@
-# youtube-music-control ![](icons/ytMusicIcon.png)
+# Youtube Music Control ![](icons/ytMusicIcon.png)
 
 Firefox addon to control active youtube music tab from any other tab.
 
