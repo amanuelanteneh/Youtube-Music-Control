@@ -1,0 +1,21 @@
+html {
+    border: solid red 8px;
+    background-color: black;
+}
+body {
+    width: 250px;
+    height: 300px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 25px;
+    color: white;
+  }
+.button {
+    margin: 3% auto;
+    padding: 4px;
+    text-align: center;
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+
+  
+  

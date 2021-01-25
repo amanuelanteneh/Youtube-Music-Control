@@ -1,0 +1,25 @@
+{
+
+    "manifest_version": 2,
+    "name": "YT Music Control",
+    "version": "1.0",
+  
+    "description": "Control Youtube music tab from other tabs.",
+  
+    "icons": {
+      "48": "icons/ytMusicIcon.png"
+    },
+  
+    "content_scripts": [
+      {
+        "matches": ["*://music.youtube.com/*"],
+        "js": ["yt-music-control.js"]
+      }
+    ],
+    "browser_action": {
+        "default_icon": {
+          "48": "icons/ytMusicIcon.png"
+        },
+        "default_popup": "popup/index.html"
+      }
+  }
