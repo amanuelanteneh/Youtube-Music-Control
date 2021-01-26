@@ -1,7 +1,7 @@
 {
 
     "manifest_version": 2,
-    "name": "YT Music Control",
+    "name": "Youtube Music Control",
     "version": "1.0",
   
     "description": "Control Youtube music tab from other tabs.",

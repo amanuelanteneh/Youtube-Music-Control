@@ -7,14 +7,24 @@
 </head>
 
 <body>
+    <div style="padding-bottom: 7px;"> <!--add space between this div and popup-content div-->
+        <img style="vertical-align:middle" src="../icons/ytMusicIcon.png" width="30" height="30">
+        <span>Music Control</span>
+    </div>
     <div>
-        <img src="../icons/ytMusicIcon.png" width="30" height="30"> Music Control
+    <img style="margin-left: 45px; border: solid red 5px;" id="albumArt" src="" width="150" height="150">
+    <div class="popup-content">
+
+        <div class="button" id="myPrevButton"><img src="../icons/prevIcon.png"></div>
+        <div class="button" id="myPlayButton"><img src="../icons/playIcon.png"></div>
+        <div class="button" id="myPauseButton"><img src="../icons/pauseIcon.png"></div>
+        <div class="button" id="myNextButton"><img src="../icons/nextIcon.png"></div>
+    </div>
+    <div class="popup-content">
+        <input type="range" min="0" max="100" value="0" step="2" id="volumeSlider" class="slider"/>
     </div>
 
-    <div id="popup-content">
-        <div class="button" id="myPlayButton">Play</div>
-        <div class="button" id="myPauseButton">Pause</div>
-      </div>    
+    </div>
     <script src="popup.js" defer></script>
 </body>
 

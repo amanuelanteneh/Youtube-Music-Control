@@ -1,5 +1,6 @@
 html {
     border: solid red 8px;
+    padding-left: 0px;
     background-color: black;
 }
 body {
@@ -10,12 +11,24 @@ body {
     color: white;
   }
 .button {
-    margin: 3% auto;
-    padding: 4px;
+    margin: 1% auto;
+    padding: 2px;
+    margin-left: 2px;
     text-align: center;
     font-size: 1.5em;
     cursor: pointer;
+    display: inline-block;
   }
-
+#volumeSlider {
+  -webkit-appearance: none;
+  height: 5px;
+  width: 94%; /* so its easier to use slider on phone */
+  margin-left: 0%;
+  background: #ff0000;
+  outline: rgb(255, 0, 0); 
+}
+/*#albumArt {
+  right: 5px;
+}*/
   
   
