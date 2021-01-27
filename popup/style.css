@@ -1,7 +1,7 @@
 html {
-    border: solid red 8px;
+    border: solid white 5px;
     padding-left: 0px;
-    background-color: black;
+    background-color: #ff0000;
 }
 body {
     width: 250px;
@@ -24,7 +24,7 @@ body {
   height: 5px;
   width: 94%; /* so its easier to use slider on phone */
   margin-left: 0%;
-  background: #ff0000;
+  background: white;
   outline: rgb(255, 0, 0); 
 }
 /*#albumArt {
