@@ -2,17 +2,22 @@ var playButton = document.getElementById("myPlayButton");
 var pauseButton = document.getElementById("myPauseButton");
 var nextButton = document.getElementById("myNextButton");
 var prevButton = document.getElementById("myPrevButton");
+var albumArtImg = document.getElementById("albumArt");
+var volumeSlider = document.getElementById("volumeSlider");
+var volume = 0;
 var message = "Album art"; //set equal to this for message sent below
 
 function sendMessage(tabs) {
     for (let tab of tabs) {
       browser.tabs.sendMessage(
         tab.id,
-        {greeting: message}
+        {greeting: message,
+         vol: volume  }
       ).then(response => {
         if (response.response != "0") {
-            document.getElementById("albumArt").src = response.response;
-            document.getElementById("volumeSlider").value = response.volume;
+            albumArtImg.src = response.response;
+            volumeSlider.value = response.volume;
+            albumArtImg.title = response.songName;
             }
         })
     }
@@ -54,10 +59,26 @@ prevButton.addEventListener('click', function() {
 
 });
 
+volumeSlider.addEventListener('change', function() {
+    message = "Volume";
+    volume = volumeSlider.value;
+    browser.tabs.query({
+        currentWindow: true,
+      }).then(sendMessage);
+
+});
+
+
 function handleMessage(request, sender, sendResponse) { 
 
      if (request.greeting == "Song change") {
-        document.getElementById("albumArt").src = request.newURL;
+        if ( request.newURL != undefined ) {
+            document.getElementById("albumArt").src = request.newURL;
+            albumArtImg.title = request.songName;
+        }
+        else {
+           document.getElementById("albumArt").src = "../icons/defaultAlbumIcon.png";
+        }
       }
 }
 

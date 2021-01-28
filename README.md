@@ -1,10 +1,13 @@
 # Youtube Music Control ![](icons/ytMusicIcon.png)
 
-Firefox addon to control active youtube music tab from any other tab.
+Firefox addon to control active youtube music tab from any other tab.   
+Features include:
+⋅ Play/pause track
+⋅ Go to next/previous track
+⋅ Change volume 
+⋅ Display track name when hovering over album art
 
 TODO:  
-⋅ Add play/pause   
-⋅ Add album art/current track info  
-⋅ Add queueing 
+⋅ Add queueing? 
 
  

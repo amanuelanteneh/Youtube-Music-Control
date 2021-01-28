@@ -19,11 +19,11 @@ new MutationObserver(() => {
   const url = location.href;
   if (url !== lastUrl) {
     lastUrl = url;
-    onUrlChange();
+    UrlChange();
   }
 }).observe(document, {subtree: true, childList: true});
 
-function onUrlChange() {
+function UrlChange() {
 
     browser.runtime.sendMessage({
         greeting: "Song change",
@@ -43,14 +43,30 @@ function handleMessage(request, sender, sendResponse) {
     }
     else if (request.greeting == "Next") {
         nextButton.click();
+        browser.runtime.sendMessage({
+            greeting: "Song change",
+            newURL: document.querySelector("#song-image").children[0].children[0].src,
+            songName: document.getElementsByClassName("ytp-title-link")[0].innerHTML
+        });
     }
     else if (request.greeting == "Previous") {
         previousButton.click();
+        browser.runtime.sendMessage({
+            greeting: "Song change",
+            newURL: document.querySelector("#song-image").children[0].children[0].src,
+            songName: document.getElementsByClassName("ytp-title-link")[0].innerHTML
+        });        
     }
+    else if (request.greeting == "Volume") {
+        document.getElementsByClassName("volume-slider")[0].setAttribute("value", request.vol);
+        console.log(request.vol);
+    }
+
     else if (request.greeting == "Album art") { //update album art and volume
-        console.log(document.querySelector(".volume-slider").value );
+        console.log( document.getElementsByClassName("volume-slider")[0].getAttribute("value") );
         return Promise.resolve({ response: document.querySelector("#song-image").children[0].children[0].src,
-                                volume: document.querySelector("#volume-slider").value });
+                                 songName: document.getElementsByClassName("ytp-title-link")[0].innerHTML,
+                                 volume: document.getElementsByClassName("volume-slider")[0].getAttribute("value") }); //for some reason .value returns undefined...
     }
 
     return Promise.resolve({ response: "0" });

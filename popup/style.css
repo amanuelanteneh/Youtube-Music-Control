@@ -2,6 +2,8 @@ html {
     border: solid white 5px;
     padding-left: 0px;
     background-color: #ff0000;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px)
 }
 body {
     width: 250px;
@@ -13,7 +15,7 @@ body {
 .button {
     margin: 1% auto;
     padding: 2px;
-    margin-left: 2px;
+    margin-left: 3px;
     text-align: center;
     font-size: 1.5em;
     cursor: pointer;
@@ -21,14 +23,24 @@ body {
   }
 #volumeSlider {
   -webkit-appearance: none;
-  height: 5px;
+  height: 3px;
   width: 94%; /* so its easier to use slider on phone */
   margin-left: 0%;
   background: white;
   outline: rgb(255, 0, 0); 
 }
-/*#albumArt {
-  right: 5px;
-}*/
+
+#volumeSlider::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  outline: white;
+  background: white;
+  cursor: pointer;
+}
+
+#albumArt {
+  margin-left: 40px; 
+  border: solid white 5px; 
+}
   
   
