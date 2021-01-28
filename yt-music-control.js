@@ -1,5 +1,4 @@
 var video = document.querySelector("video");
-var player = document.querySelector('#movie_player');
 var nextButton = document.getElementsByClassName("next-button")[0];
 var previousButton = document.getElementsByClassName("previous-button")[0];
 var albumImageURL = document.querySelector("#song-image").children[0].children[0].src;
@@ -13,17 +12,17 @@ if (albumImageURL != null && albumImageURL != undefined) {
 
 browser.runtime.onMessage.addListener(handleMessage);
 
-/* To check if url changes */
+/* To check if url (song) changes */
 let lastUrl = location.href; 
 new MutationObserver(() => {
   const url = location.href;
   if (url !== lastUrl) {
     lastUrl = url;
-    UrlChange();
+    URLChange();
   }
 }).observe(document, {subtree: true, childList: true});
 
-function UrlChange() {
+function URLChange() {
 
     browser.runtime.sendMessage({
         greeting: "Song change",
@@ -31,7 +30,6 @@ function UrlChange() {
     });
 
 }
-
 
 function handleMessage(request, sender, sendResponse) {
 
@@ -57,17 +55,16 @@ function handleMessage(request, sender, sendResponse) {
             songName: document.getElementsByClassName("ytp-title-link")[0].innerHTML
         });        
     }
-    else if (request.greeting == "Volume") {
+    else if (request.greeting == "Volume") { //change volume
         document.getElementsByClassName("volume-slider")[0].setAttribute("value", request.vol);
-        console.log(request.vol);
     }
 
     else if (request.greeting == "Album art") { //update album art and volume
-        console.log( document.getElementsByClassName("volume-slider")[0].getAttribute("value") );
-        return Promise.resolve({ response: document.querySelector("#song-image").children[0].children[0].src,
-                                 songName: document.getElementsByClassName("ytp-title-link")[0].innerHTML,
-                                 volume: document.getElementsByClassName("volume-slider")[0].getAttribute("value") }); //for some reason .value returns undefined...
-    }
 
-    return Promise.resolve({ response: "0" });
+        return Promise.resolve({ response: document.querySelector("#song-image").children[0].children[0].src, //album art
+                                 songName: document.getElementsByClassName("ytp-title-link")[0].innerHTML, //track name
+                                 volume: document.getElementsByClassName("volume-slider")[0].getAttribute("value") }); //for some reason .value returns undefined...
+                                }
+
+    return Promise.resolve({ response: "0" }); //return 0 if no response needed
 }

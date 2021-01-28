@@ -7,6 +7,7 @@ var volumeSlider = document.getElementById("volumeSlider");
 var volume = 0;
 var message = "Album art"; //set equal to this for message sent below
 
+/*  function to send messages to content script   */
 function sendMessage(tabs) {
     for (let tab of tabs) {
       browser.tabs.sendMessage(
@@ -16,6 +17,7 @@ function sendMessage(tabs) {
       ).then(response => {
         if (response.response != "0") {
             albumArtImg.src = response.response;
+            document.getElementById("bkgd").style.backgroundImage = "url(" + response.response + ")";
             volumeSlider.value = response.volume;
             albumArtImg.title = response.songName;
             }
@@ -23,7 +25,7 @@ function sendMessage(tabs) {
     }
   }
 
-browser.tabs.query({ /* execute this every time popup is loaded to have album art */
+browser.tabs.query({ /* execute this every time popup is loaded to load album art, volume & track name */
        currentWindow: true,
     }).then(sendMessage);
 
@@ -68,12 +70,13 @@ volumeSlider.addEventListener('change', function() {
 
 });
 
-
+/* To handle messages/responses from content script on YT music page */
 function handleMessage(request, sender, sendResponse) { 
 
      if (request.greeting == "Song change") {
         if ( request.newURL != undefined ) {
             document.getElementById("albumArt").src = request.newURL;
+            document.getElementById("bkgd").style.backgroundImage = "url(" + request.newURL + ")";
             albumArtImg.title = request.songName;
         }
         else {
@@ -82,4 +85,4 @@ function handleMessage(request, sender, sendResponse) {
       }
 }
 
-browser.runtime.onMessage.addListener(handleMessage);
+browser.runtime.onMessage.addListener(handleMessage); //add listener for messages
