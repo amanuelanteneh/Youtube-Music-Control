@@ -7,21 +7,20 @@
 </head>
 
 <body>
-    <div class="bkgd-class" id="bkgd"></div>
+    <div id="bkgd"></div> <!--For the blurred version of the album art-->
     <div style="padding-bottom: 7px;"> <!--add space between this div and popup-content div-->
         <img style="vertical-align:middle" src="../icons/ytMusicIcon.png" width="30" height="30">
         <span><b>Music Control</b></span>
     </div>
     <div>
     <img id="albumArt" title="" src="../icons/defaultAlbumIcon.png" width="150" height="150">
-    <div class="popup-content">
-
+    <div>
         <div class="button" id="myPrevButton"><img src="../icons/prevIcon.png"></div>
         <div class="button" id="myPlayButton"><img src="../icons/playIcon.png"></div>
         <div class="button" id="myPauseButton"><img src="../icons/pauseIcon.png"></div>
         <div class="button" id="myNextButton"><img src="../icons/nextIcon.png"></div>
     </div>
-    <div class="popup-content">
+    <div>
         <input type="range" min="0" max="100" value="0" step="5" id="volumeSlider" class="slider"/>
     </div>
 
