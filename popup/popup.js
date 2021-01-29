@@ -29,6 +29,15 @@ browser.tabs.query({ /* execute this every time popup is loaded to load album ar
        currentWindow: true,
     }).then(sendMessage);
 
+/* This is so song info is always up to date, bascially j get the song info whenever user hovers over album art */
+albumArtImg.addEventListener('mouseover', function() {
+     message = "Album art";
+     browser.tabs.query({
+        currentWindow: true,
+     }).then(sendMessage);
+
+});
+
 playButton.addEventListener('click', function() {
     message = "Play";
     browser.tabs.query({
