@@ -19,7 +19,7 @@ function sendMessage(tabs) {
             albumArtImg.src = response.response;
             document.getElementById("bkgd").style.backgroundImage = "url(" + response.response + ")";
             volumeSlider.value = response.volume;
-            albumArtImg.title = response.songName;
+            albumArtImg.title = response.songInfo;
             }
         })
     }
@@ -77,7 +77,7 @@ function handleMessage(request, sender, sendResponse) {
         if ( request.newURL != undefined ) {
             document.getElementById("albumArt").src = request.newURL;
             document.getElementById("bkgd").style.backgroundImage = "url(" + request.newURL + ")";
-            albumArtImg.title = request.songName;
+            albumArtImg.title = request.songInfo;
         }
         else {
            document.getElementById("albumArt").src = "../icons/defaultAlbumIcon.png";

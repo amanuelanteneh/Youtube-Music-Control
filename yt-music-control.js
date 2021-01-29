@@ -44,15 +44,16 @@ function handleMessage(request, sender, sendResponse) {
         browser.runtime.sendMessage({
             greeting: "Song change",
             newURL: document.querySelector("#song-image").children[0].children[0].src,
-            songName: document.getElementsByClassName("ytp-title-link")[0].innerHTML + " • " + document.querySelector('.byline.ytmusic-player-bar').title
+            songInfo: document.getElementsByClassName("ytp-title-link")[0].innerHTML + " • " + document.querySelector('.byline.ytmusic-player-bar').title
         });
     }
     else if (request.greeting == "Previous") {
         previousButton.click();
+
         browser.runtime.sendMessage({
             greeting: "Song change",
             newURL: document.querySelector("#song-image").children[0].children[0].src,
-            songName: document.getElementsByClassName("ytp-title-link")[0].innerHTML + " • " + document.querySelector('.byline.ytmusic-player-bar').title
+            songInfo: document.getElementsByClassName("ytp-title-link")[0].innerHTML + " • " + document.querySelector('.byline.ytmusic-player-bar').textContent
         });        
     }
     else if (request.greeting == "Volume") { //change volume
@@ -62,7 +63,7 @@ function handleMessage(request, sender, sendResponse) {
     else if (request.greeting == "Album art") { //update album art and volume
         console.log(document.querySelector('.byline.ytmusic-player-bar').title ) ; 
         return Promise.resolve({ response: document.querySelector("#song-image").children[0].children[0].src, //album art
-                                 songName: document.getElementsByClassName("ytp-title-link")[0].innerHTML + " • " + document.querySelector('.byline.ytmusic-player-bar').title, //track info
+                                 songInfo: document.getElementsByClassName("ytp-title-link")[0].innerHTML + " • " + document.querySelector('.byline.ytmusic-player-bar').textContent, //track info
                                  volume: document.getElementsByClassName("volume-slider")[0].getAttribute("value") }); //for some reason .value returns undefined...
                                 }
 
