@@ -61,7 +61,7 @@ function handleMessage(request, sender, sendResponse) {
     }
 
     else if (request.greeting == "Album art") { //update album art and volume
-        console.log(document.querySelector('.byline.ytmusic-player-bar').title ) ; 
+ 
         return Promise.resolve({ response: document.querySelector("#song-image").children[0].children[0].src, //album art
                                  songInfo: document.getElementsByClassName("ytp-title-link")[0].innerHTML + " • " + document.querySelector('.byline.ytmusic-player-bar').textContent, //track info
                                  volume: document.getElementsByClassName("volume-slider")[0].getAttribute("value") }); //for some reason .value returns undefined...
