@@ -13,7 +13,7 @@ function sendMessage(tabs) {
       browser.tabs.sendMessage(
         tab.id,
         {greeting: message,
-         vol: volume  }
+         vol: volume }
       ).then(response => {
         if (response.response != "0") {
             albumArtImg.src = response.response;

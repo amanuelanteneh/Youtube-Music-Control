@@ -29,10 +29,10 @@ body {
 }
 
 #volumeSlider::-moz-range-thumb {
-  width: 10px;
-  height: 10px;
-  outline: black;
-  background: black;
+  width: 12px;
+  height: 12px;
+  outline: rgb(255, 0, 0);
+  background: rgb(255, 0, 0);
   cursor: pointer;
 }
 
