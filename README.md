@@ -6,8 +6,20 @@ Features include:
 ⋅ Go to next/previous track   
 ⋅ Change volume   
 ⋅ Display track name when hovering over album art   
+
+
+![Image 1](small.png)          
+
+
+
+![Image 2](large.png)
+
+
    
 TODO:  
 ⋅ Add queueing? 
+
+
+
 
  
