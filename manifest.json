@@ -2,9 +2,9 @@
 
     "manifest_version": 2,
     "name": "Youtube Music Control",
-    "version": "1.1",
+    "version": "1.1.1",
   
-    "description": "Control Youtube music tab from other tabs. Features include: \n •Play/pause current track \n •Skip to next/previous track \n •Adjust volume \n •Track info when mouse over album art",
+    "description": "Control Youtube music tab from other tabs.",
   
     "icons": {
       "48": "icons/ytMusicIcon.png"
