@@ -51,4 +51,5 @@ body {
     left: 0;    
     background-position: center;
     background-size: cover;
+    opacity: 0.82; /* for white album art */
 }
