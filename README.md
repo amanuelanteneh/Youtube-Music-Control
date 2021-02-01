@@ -8,11 +8,11 @@ Features include:
 ⋅ Display track name when hovering over album art   
 ⋅ Shuffle playlist     
  
-![Image 1](small.png)          
+![Image 1](smallPic.png)          
 
 
 
-![Image 2](large.png)
+![Image 2](largePic.png)
 
 
    
