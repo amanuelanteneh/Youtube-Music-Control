@@ -104,6 +104,14 @@ function handleMessage(request, sender, sendResponse) {
             document.getElementById("albumArt").src = request.newURL;
             document.getElementById("bkgd").style.backgroundImage = "url(" + request.newURL + ")";
             albumArtImg.title = request.songInfo;
+            if (request.playPauseStatus == "Play") {
+              document.getElementById("playPauseIcon").src = "../icons/playIcon.png";
+              paused = 1;
+            }
+            else {
+              document.getElementById("playPauseIcon").src = "../icons/pauseIcon.png";
+              paused = 0;
+            }
         }
         else {
            document.getElementById("albumArt").src = "../icons/defaultAlbumIcon.png";

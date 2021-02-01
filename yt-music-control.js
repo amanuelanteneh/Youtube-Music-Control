@@ -47,8 +47,8 @@ function handleMessage(request, sender, sendResponse) {
         browser.runtime.sendMessage({
             greeting: "Song change",
             newURL: document.querySelector("#song-image").children[0].children[0].src,
-            songInfo: document.getElementsByClassName("ytp-title-link")[0].innerHTML + " • " + document.querySelector('.byline.ytmusic-player-bar').title
-        });
+            songInfo: document.getElementsByClassName("ytp-title-link")[0].innerHTML + " • " + document.querySelector('.byline.ytmusic-player-bar').title,
+            playPauseStatus: document.getElementById("play-pause-button").getAttribute("title")        });
     }
     else if (request.greeting == "Previous") {
         previousButton.click();
@@ -56,7 +56,8 @@ function handleMessage(request, sender, sendResponse) {
         browser.runtime.sendMessage({
             greeting: "Song change",
             newURL: document.querySelector("#song-image").children[0].children[0].src,
-            songInfo: document.getElementsByClassName("ytp-title-link")[0].innerHTML + " • " + document.querySelector('.byline.ytmusic-player-bar').textContent
+            songInfo: document.getElementsByClassName("ytp-title-link")[0].innerHTML + " • " + document.querySelector('.byline.ytmusic-player-bar').textContent,
+            playPauseStatus: document.getElementById("play-pause-button").getAttribute("title") 
         });        
     }
     else if (request.greeting == "Volume") { //change volume
