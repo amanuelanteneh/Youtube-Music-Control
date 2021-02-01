@@ -6,8 +6,8 @@ Features include:
 ⋅ Go to next/previous track   
 ⋅ Change volume   
 ⋅ Display track name when hovering over album art   
-
-
+⋅ Shuffle playlist     
+ 
 ![Image 1](small.png)          
 
 
