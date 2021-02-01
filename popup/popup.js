@@ -1,25 +1,35 @@
-var playButton = document.getElementById("myPlayButton");
-var pauseButton = document.getElementById("myPauseButton");
+var playPauseButton = document.getElementById("myPlayPauseButton");
 var nextButton = document.getElementById("myNextButton");
 var prevButton = document.getElementById("myPrevButton");
+var shuffleButton = document.getElementById("myShuffleButton");
 var albumArtImg = document.getElementById("albumArt");
 var volumeSlider = document.getElementById("volumeSlider");
 var volume = 0;
 var message = "Album art"; //set equal to this for message sent below
-
+var paused = 0;
 /*  function to send messages to content script   */
 function sendMessage(tabs) {
     for (let tab of tabs) {
       browser.tabs.sendMessage(
         tab.id,
-        {greeting: message,
-         vol: volume }
+        {
+         greeting: message,
+         vol: volume 
+        }
       ).then(response => {
         if (response.response != "0") {
             albumArtImg.src = response.response;
             document.getElementById("bkgd").style.backgroundImage = "url(" + response.response + ")";
             volumeSlider.value = response.volume;
             albumArtImg.title = response.songInfo;
+            if (response.playPauseStatus == "Play") {
+              document.getElementById("playPauseIcon").src = "../icons/playIcon.png";
+              paused = 1;
+            }
+            else {
+              document.getElementById("playPauseIcon").src = "../icons/pauseIcon.png";
+              paused = 0;
+            }
             }
         })
     }
@@ -38,16 +48,23 @@ albumArtImg.addEventListener('mouseover', function() {
 
 });
 
-playButton.addEventListener('click', function() {
-    message = "Play";
+playPauseButton.addEventListener('click', function() {
+    message = "Play-Pause";
+    if (paused) {
+       document.getElementById("playPauseIcon").src = "../icons/pauseIcon.png";
+       paused = !paused;
+    }
+    else {
+      document.getElementById("playPauseIcon").src = "../icons/playIcon.png";
+      paused = !paused;
+    }
     browser.tabs.query({
         currentWindow: true, //only control from tabs in same browser window
       }).then(sendMessage);
-
 });
 
-pauseButton.addEventListener('click', function() {
-    message = "Pause";
+shuffleButton.addEventListener('click', function() {
+    message = "Shuffle";
     browser.tabs.query({
         currentWindow: true,
       }).then(sendMessage);
