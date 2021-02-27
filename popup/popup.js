@@ -36,14 +36,14 @@ function sendMessage(tabs) {
   }
 
 browser.tabs.query({ /* execute this every time popup is loaded to load album art, volume & track name */
-       currentWindow: true,
+      
     }).then(sendMessage);
 
 /* This is so song info is always up to date, bascially j get the song info whenever user hovers over album art */
 albumArtImg.addEventListener('mouseover', function() {
      message = "Album art";
      browser.tabs.query({
-        currentWindow: true,
+      
      }).then(sendMessage);
 
 });
@@ -57,16 +57,16 @@ playPauseButton.addEventListener('click', function() {
     else {
       document.getElementById("playPauseIcon").src = "../icons/playIcon.png";
       paused = !paused;
-    }
+    } 
     browser.tabs.query({
-        currentWindow: true, //only control from tabs in same browser window
+
       }).then(sendMessage);
 });
 
 shuffleButton.addEventListener('click', function() {
     message = "Shuffle";
     browser.tabs.query({
-        currentWindow: true,
+      
       }).then(sendMessage);
 
 });
@@ -74,7 +74,7 @@ shuffleButton.addEventListener('click', function() {
 nextButton.addEventListener('click', function() {
     message = "Next";
     browser.tabs.query({
-        currentWindow: true,
+      
       }).then(sendMessage);
 
 });
@@ -82,7 +82,7 @@ nextButton.addEventListener('click', function() {
 prevButton.addEventListener('click', function() {
     message = "Previous";
     browser.tabs.query({
-        currentWindow: true,
+      //no currentWindow parameter so you can control the player from any firefox window
       }).then(sendMessage);
 
 });
@@ -91,7 +91,7 @@ volumeSlider.addEventListener('change', function() {
     message = "Volume";
     volume = volumeSlider.value;
     browser.tabs.query({
-        currentWindow: true,
+      
       }).then(sendMessage);
 
 });
