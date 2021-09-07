@@ -1,5 +1,7 @@
 # ![](icons/ytMusicIcon.png) Youtube Music Control 
 
+Access add-on page at: https://addons.mozilla.org/en-US/firefox/addon/youtube-music-control/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search
+
 Firefox addon to control active youtube music tab from any other tab.   
 Features include:   
 ⋅ Play/pause track   
