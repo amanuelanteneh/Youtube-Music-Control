@@ -2,6 +2,7 @@ html {
     border: solid white 6px;
     padding-left: 0px;
     background-color: #000000;
+    user-select: none;
   }
 body {
     width: 250px;
