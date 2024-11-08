@@ -1,29 +1,54 @@
 html {
-    border: solid white 6px;
-    padding-left: 0px;
-    background-color: #000000;
-  }
+  border: solid white 6px;
+  background-color: #000000;
+  user-select: none;
+  overflow: hidden;
+}
 body {
-    width: 250px;
-    height: 300px;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 25px;
-    color: white;
-  }
+  width: 250px;
+  height: 300px;
+  font-family: Impact;
+  font-size: 24px;
+  color: white;
+  text-shadow: 2px 1px 1px black;
+  letter-spacing: 0.2px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+header {
+  display: flex;
+  align-self: flex-start;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 4px;
+}
+
+.button-group {
+  margin: 0 12px;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
 .button {
-    margin: 1% auto;
-    padding: 2px;
-    margin-left: 3px;
-    text-align: center;
-    font-size: 1.5em;
-    cursor: pointer;
-    display: inline-block;
-  }
+  padding: 2px;
+  text-align: center;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.volume-container {
+  margin-top: -12px;
+}
+
 #volumeSlider {
   -webkit-appearance: none;
   height: 3px;
-  width: 94%; 
-  margin-left: 0%;
   background: white;
   outline:black; 
 }
@@ -36,20 +61,22 @@ body {
   cursor: pointer;
 }
 
+
 #albumArt {
-  margin-left: 40px; 
-  border: solid white 5px; 
+  border: solid white 2px;
+  border-radius: 12px;
 }
-  
+
+
 #bkgd { /* to set background of popup to be blurred version of album art */
-    width: 100%;
-    height: 100%;
-    filter: blur(6px);
-    z-index: -1;
-    position: fixed;
-    top: 0;
-    left: 0;    
-    background-position: center;
-    background-size: cover;
-    opacity: 0.82; /* for white album art */
+  width: 100%;
+  height: 100%;
+  filter: blur(6px);
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  left: 0;    
+  background-position: center;
+  background-size: cover;
+  opacity: 0.82; /* for white album art */
 }
