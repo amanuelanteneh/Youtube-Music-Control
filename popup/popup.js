@@ -43,7 +43,7 @@ browser.tabs
   })
   .then(sendMessage);
 
-/* This is so song info is always up to date, bascially j get the song info whenever user hovers over album art */
+/* This is so song info is always up to date, basically just get the song info whenever user hovers over album art */
 albumArtImg.addEventListener("mouseover", function () {
   message = "Album art";
   browser.tabs.query({}).then(sendMessage);

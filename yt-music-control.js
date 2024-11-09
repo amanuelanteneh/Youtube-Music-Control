@@ -78,7 +78,7 @@ function handleMessage(request, sender, sendResponse) {
         document.getElementsByClassName("ytp-title-link")[0].innerHTML +
         " • " +
         document.querySelector(".byline.ytmusic-player-bar").textContent, //track info
-      volume: video?.volume ?? 100,
+      volume: video.volume * 100, // send volume info
       playPauseStatus: document
         .getElementById("play-pause-button")
         .getAttribute("title"),
