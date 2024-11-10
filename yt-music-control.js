@@ -26,6 +26,7 @@ new MutationObserver(() => {
 }).observe(document, { subtree: true, childList: true });
 
 function URLChange() {
+
   browser.runtime.sendMessage({
     greeting: "Song change",
     newURL: document.querySelector("#song-image").children[0].children[0].src,
@@ -67,7 +68,8 @@ function handleMessage(request, sender, sendResponse) {
   } else if (request.greeting == "Volume") {
     //change volume
     if (video) {
-      video.volume = request.vol / 100;
+      document.getElementsByClassName("volume-slider")[0].setAttribute("value", request.vol); // update volume slider in UI
+      video.volume = request.vol / 100; // update video volume, divide by 100 as volume must be between [0,1]
     }
   } else if (request.greeting == "Album art") {
     //update album art and volume
