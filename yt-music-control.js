@@ -1,4 +1,4 @@
-var video = document.querySelector("video");
+var video = document.querySelector("video"); // get HTML elements of YT music page like the video, play pause button, etc...
 var playPauseButton = document.getElementById("play-pause-button");
 var nextButton = document.getElementsByClassName("next-button")[0];
 var previousButton = document.getElementsByClassName("previous-button")[0];
@@ -73,12 +73,12 @@ function handleMessage(request, sender, sendResponse) {
     //update album art and volume
     return Promise.resolve({
       response:
-        document.querySelector("#song-image").children[0].children[0].src, //album art
+        document.querySelector("#song-image").children[0].children[0].src, //send back album art to popup
       songInfo:
         document.getElementsByClassName("ytp-title-link")[0].innerHTML +
         " • " +
-        document.querySelector(".byline.ytmusic-player-bar").textContent, //track info
-      volume: video.volume * 100, // send volume info
+        document.querySelector(".byline.ytmusic-player-bar").textContent, //send back track info to popup
+      volume: video.volume * 100, // send back volume info to popup
       playPauseStatus: document
         .getElementById("play-pause-button")
         .getAttribute("title"),

@@ -1,4 +1,4 @@
-var playPauseButton = document.getElementById("myPlayPauseButton");
+var playPauseButton = document.getElementById("myPlayPauseButton"); // first HTML elements of the popup
 var nextButton = document.getElementById("myNextButton");
 var prevButton = document.getElementById("myPrevButton");
 var shuffleButton = document.getElementById("myShuffleButton");
