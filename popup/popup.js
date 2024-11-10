@@ -1,13 +1,11 @@
 import { ALBUM_ART, NEXT_MESSAGE, PLAY_PAUSE, PREVIOUS_MESSAGE, SHUFFLE, VOLUME_MESSAGE, ON_OPEN } from "../constants.js"
 
 var volume = 50;
-var paused = false;
 
 const playPauseButtonDoc = document.getElementById("playPauseIcon")
 const albumArtImgDoc = document.getElementById("albumArt");
 const volumeSliderDoc = document.getElementById("volumeSlider");
 const backgroundDoc = document.getElementById("bkgd");
-const youtubeMusicURL = "*://music.youtube.com/*"
 
 const pauseIconImage = "../icons/pauseIcon.png"
 const playIconImage = "../icons/playIcon.png"
