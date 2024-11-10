@@ -1,108 +1,110 @@
-var playPauseButton = document.getElementById("myPlayPauseButton"); // first HTML elements of the popup
-var nextButton = document.getElementById("myNextButton");
-var prevButton = document.getElementById("myPrevButton");
-var shuffleButton = document.getElementById("myShuffleButton");
-var albumArtImg = document.getElementById("albumArt");
-var volumeSlider = document.getElementById("volumeSlider");
-var volume = 0;
-var message = "Album art"; //set equal to this for message sent below
-var paused = 0;
+import { ALBUM_ART, NEXT_MESSAGE, PLAY_PAUSE, PREVIOUS_MESSAGE, SHUFFLE, VOLUME_MESSAGE, ON_OPEN } from "../constants.js"
+
+var volume = 50;
+var paused = false;
+
+const playPauseButtonDoc = document.getElementById("playPauseIcon")
+const albumArtImgDoc = document.getElementById("albumArt");
+const volumeSliderDoc = document.getElementById("volumeSlider");
+const backgroundDoc = document.getElementById("bkgd");
+const youtubeMusicURL = "*://music.youtube.com/*"
+
+const pauseIconImage = "../icons/pauseIcon.png"
+const playIconImage = "../icons/playIcon.png"
+const actions = [
+  {
+    message: PLAY_PAUSE,
+    userAction: "click",
+    document: document.getElementById("myPlayPauseButton"),
+  },
+  {
+    message: ALBUM_ART,
+    userAction: "mouseover",
+    document: document.getElementById("albumArt"),
+  },
+  {
+    message: SHUFFLE,
+    userAction: "click",
+    document: document.getElementById("myShuffleButton")
+  },
+  {
+    message: NEXT_MESSAGE,
+    userAction: "click",
+    document: document.getElementById("myNextButton")
+  },
+  {
+    message: PREVIOUS_MESSAGE,
+    userAction: "click",
+    document: document.getElementById("myPrevButton")
+  },
+  {
+    message: VOLUME_MESSAGE,
+    userAction: "change",
+    document: volumeSliderDoc,
+    function: () => {
+      volume = volumeSliderDoc.value
+    }
+  }
+]
+
+
 /*  function to send messages to content script   */
-function sendMessage(tabs) {
-  for (let tab of tabs) {
+function sendMessage(tabs, message) {
+  for (const tab of tabs) {
     browser.tabs
       .sendMessage(tab.id, {
         greeting: message,
         vol: volume,
       })
       .then((response) => {
-        if (response.response != "0") {
-          albumArtImg.src = response.response;
-          document.getElementById("bkgd").style.backgroundImage =
-            "url(" + response.response + ")";
-
-          volumeSlider.value = response.volume;
-          albumArtImg.title = response.songInfo;
-          if (response.playPauseStatus == "Play") {
-            document.getElementById("playPauseIcon").src =
-              "../icons/playIcon.png";
-            paused = 1;
-          } else {
-            document.getElementById("playPauseIcon").src =
-              "../icons/pauseIcon.png";
-            paused = 0;
-          }
+        if (message == ON_OPEN) {
+          volume = response.volume
         }
+        setMusicInfo(response)
       });
   }
 }
 
-browser.tabs
-  .query({
-    /* execute this every time popup is loaded to load album art, volume & track name */
+
+window.onload = () => { browser.tabs.query({}).then(tabs => sendMessage(tabs, ON_OPEN)); }
+
+for (const action of actions) {
+  action.document.addEventListener(action.userAction, () => {
+    console.log(action.message + " event received")
+    if (action.function) {
+      action.function()
+    }
+    browser.tabs.query({}).then(tabs => sendMessage(tabs, action.message));
   })
-  .then(sendMessage);
+}
 
-/* This is so song info is always up to date, basically just get the song info whenever user hovers over album art */
-albumArtImg.addEventListener("mouseover", function () {
-  message = "Album art";
-  browser.tabs.query({}).then(sendMessage);
-});
+function setMusicInfo(response) {
+  albumArtImgDoc.src = response.songImg;
+  backgroundDoc.style.backgroundImage =
+    "url(" + response.songImg + ")";
+  albumArtImgDoc.title = response.songInfo;
+  volumeSliderDoc.setAttribute("value", volume);
+  setPlayPauseIcon(response.playPauseStatus)
+}
 
-playPauseButton.addEventListener("click", function () {
-  message = "Play-Pause";
-  if (paused) {
-    document.getElementById("playPauseIcon").src = "../icons/pauseIcon.png";
-    paused = !paused;
+function setPlayPauseIcon(playPauseStatus) {
+  if (playPauseStatus == "Play") {
+    playPauseButtonDoc.src = playIconImage;
+    paused = true;
   } else {
-    document.getElementById("playPauseIcon").src = "../icons/playIcon.png";
-    paused = !paused;
+    playPauseButtonDoc.src = pauseIconImage;
+    paused = false;
   }
-  browser.tabs.query({}).then(sendMessage);
-});
+}
 
-shuffleButton.addEventListener("click", function () {
-  message = "Shuffle";
-  browser.tabs.query({}).then(sendMessage);
-});
-
-nextButton.addEventListener("click", function () {
-  message = "Next";
-  browser.tabs.query({}).then(sendMessage);
-});
-
-prevButton.addEventListener("click", function () {
-  message = "Previous";
-  browser.tabs
-    .query({
-      //no currentWindow parameter so you can control the player from any firefox window
-    })
-    .then(sendMessage);
-});
-
-volumeSlider.addEventListener("change", function () {
-  message = "Volume";
-  volume = volumeSlider.value;
-  browser.tabs.query({}).then(sendMessage);
-});
 
 /* To handle messages/responses from content script on YT music page */
 function handleMessage(request, sender, sendResponse) {
   if (request.greeting == "Song change") {
-    if (request.newURL != undefined) {
-      document.getElementById("albumArt").src = request.newURL;
-      document.getElementById("bkgd").style.backgroundImage =
-        "url(" + request.newURL + ")";
-      albumArtImg.title = request.songInfo;
-      if (request.playPauseStatus == "Play") {
-        document.getElementById("playPauseIcon").src = "../icons/playIcon.png";
-        paused = 1;
-      } else {
-        document.getElementById("playPauseIcon").src = "../icons/pauseIcon.png";
-        paused = 0;
-      }
+    if (request.songImg) {
+      setMusicInfo(request)
     } else {
-      document.getElementById("albumArt").src = "../icons/defaultAlbumIcon.png";
+      albumArtImgDoc.src = "../icons/defaultAlbumIcon.png";
     }
   }
 }

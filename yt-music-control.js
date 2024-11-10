@@ -1,8 +1,9 @@
-var video = document.querySelector("video"); // get HTML elements of YT music page like the video, play pause button, etc...
+var video = document.getElementById("movie_player").querySelector("video")
+var volumeSlider = document.getElementById("volume-slider");
 var playPauseButton = document.getElementById("play-pause-button");
 var nextButton = document.getElementsByClassName("next-button")[0];
 var previousButton = document.getElementsByClassName("previous-button")[0];
-var shuffleButton = document.querySelector(".shuffle.ytmusic-player-bar");
+var shuffleButton = document.getElementsByClassName("shuffle style-scope ytmusic-player-bar")[0];
 var albumImageURL =
   document.querySelector("#song-image").children[0].children[0].src;
 
@@ -26,64 +27,61 @@ new MutationObserver(() => {
 }).observe(document, { subtree: true, childList: true });
 
 function URLChange() {
+  setVolume(volumeSlider.value)
   browser.runtime.sendMessage({
     greeting: "Song change",
-    newURL: document.querySelector("#song-image").children[0].children[0].src,
+    songImg: document.querySelector("#song-image").children[0].children[0].src,
+    songInfo:
+      document.getElementsByClassName("ytp-title-link")[0].innerHTML +
+      " • " +
+      document.querySelector(".byline.ytmusic-player-bar").title,
+    volume: volumeSlider.value,
+    playPauseStatus: document.getElementById("play-pause-button").title
   });
 }
 
 function handleMessage(request, sender, sendResponse) {
-  if (request.greeting == "Play-Pause") {
-    playPauseButton.click();
-  } else if (request.greeting == "Shuffle") {
-    shuffleButton.click();
-  } else if (request.greeting == "Next") {
-    nextButton.click();
-    browser.runtime.sendMessage({
-      greeting: "Song change",
-      newURL: document.querySelector("#song-image").children[0].children[0].src,
-      songInfo:
-        document.getElementsByClassName("ytp-title-link")[0].innerHTML +
-        " • " +
-        document.querySelector(".byline.ytmusic-player-bar").title,
-      playPauseStatus: document
-        .getElementById("play-pause-button")
-        .getAttribute("title"),
-    });
-  } else if (request.greeting == "Previous") {
-    previousButton.click();
-
-    browser.runtime.sendMessage({
-      greeting: "Song change",
-      newURL: document.querySelector("#song-image").children[0].children[0].src,
-      songInfo:
-        document.getElementsByClassName("ytp-title-link")[0].innerHTML +
-        " • " +
-        document.querySelector(".byline.ytmusic-player-bar").textContent,
-      playPauseStatus: document
-        .getElementById("play-pause-button")
-        .getAttribute("title"),
-    });
-  } else if (request.greeting == "Volume") {
-    //change volume
-    if (video) {
-      video.volume = request.vol / 100;
-    }
-  } else if (request.greeting == "Album art") {
-    //update album art and volume
-    return Promise.resolve({
-      response:
-        document.querySelector("#song-image").children[0].children[0].src, //send back album art to popup
-      songInfo:
-        document.getElementsByClassName("ytp-title-link")[0].innerHTML +
-        " • " +
-        document.querySelector(".byline.ytmusic-player-bar").textContent, //send back track info to popup
-      volume: video.volume * 100, // send back volume info to popup
-      playPauseStatus: document
-        .getElementById("play-pause-button")
-        .getAttribute("title"),
-    });
+  var playPauseStatus = document.getElementById("play-pause-button").title
+  var volume = request.vol
+  switch (request.greeting) {
+    case "On Open":
+      volume = volumeSlider.getAttribute("value")
+      break;
+    case "Play Pause":
+      playPauseButton.click();
+      playPauseStatus = playPauseStatus == "Play" ? "Pause" : "Play";
+      break;
+    case "Shuffle":
+      shuffleButton.click();
+      playPauseStatus = "Pause";
+      break;
+    case "Next":
+      nextButton.click();
+      playPauseStatus = "Pause";
+      break;
+    case "Previous":
+      previousButton.click();
+      playPauseStatus = "Pause";
+      break;
   }
 
-  return Promise.resolve({ response: "0" }); //return 0 if no response needed
+  setVolume(volume)
+  volumeSlider.setAttribute("value", volume)
+
+  return Promise.resolve({
+    songImg:
+      document.querySelector("#song-image").children[0].children[0].src,
+    songInfo:
+      document.getElementsByClassName("ytp-title-link")[0].innerHTML +
+      " • " +
+      document.querySelector(".byline.ytmusic-player-bar").title,
+    volume: volumeSlider.getAttribute("value"),
+    playPauseStatus: playPauseStatus
+  });
+}
+
+function setVolume(vol) {
+  if (video) {
+    video.volume = vol / 100;
+  }
 }
